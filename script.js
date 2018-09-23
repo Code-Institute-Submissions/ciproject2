@@ -131,13 +131,17 @@ function playNextRound(currentRound, repeat = false, fromHtml = false) {
 
         var sound = transformTable[currentSequence[iteration]];
         sounds[sound].play();
-        // set bg color of other divs to white
-         $('.game-div').css('backgroundColor', 'white');
+
         // we need to light up a div as well
         var divId = transformTable[currentSequence[iteration]];
         $('#' + divId).css('backgroundColor', $('#' + divId).css("border-left-color"));
+        // ...and make it hollow again
+        setTimeout(function() {
+            $('#' + divId).css('backgroundColor', 'white');
+        }, 500);
         iteration++;
     }, 1000)
+
 
     
 }
