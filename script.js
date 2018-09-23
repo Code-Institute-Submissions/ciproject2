@@ -1,8 +1,8 @@
 /* global $ */
 
-var playingDemo = false;
-var currentRound = 2 ;
-var currentSequence = [ 1, 2, 3 ] ;
+var playingDemo = true;
+var currentRound = 1 ;
+var currentSequence = [ ] ;
 var playerClick = 0;
 
 // storing setInterval() in here will allow us to stop it.
@@ -14,6 +14,8 @@ var sounds = {
     c: new Audio('sounds/c.mp3'),
     d: new Audio('sounds/d.mp3')
 }
+var failSound = new Audio('sounds/combobreaker.mp3');
+
 var transformTable = {
     1: 'a', 2: 'b', 3: 'c', 4: 'd' 
 }
@@ -21,9 +23,7 @@ var oTable = {
     a: 1, b: 2, c: 3, d: 4
 }
 $(document).ready(function () {
-    
 
-    
     $( "#a" ).mousedown(function() {
         $('#a').css('backgroundColor', 'red');
     });
@@ -41,28 +41,45 @@ $(document).ready(function () {
     });
     $('.game-div').click(function (){
         // clicks will do nothing if the script is currently playing the sequence
-        if (playingDemo === true) {
-            return;
-        }
-        var id = $(this).attr('id') ;
-        sounds[id].play();
-        if (currentSequence[playerClick] == oTable[id]) {
-            
-            console.log('good' + playerClick);
-            playerClick++;
-        }
-        else {
-            // wrong sequence, reset 
-            playerClick = 0 ;
-        }
+        if (playingDemo === false) {
+
         
+            var id = $(this).attr('id') ;
+            sounds[id].play();
+            if (currentSequence[playerClick] == oTable[id]) {
+                
+                debugg('good! ' + playerClick);
+                if (playerClick == currentSequence.length - 1) {
+                    // go to the next round
+                    debugg("Success! Next round...")
+                    currentRound++ ;
+                    playNextRound(currentRound, false);
+                    
+                }
+                else {
+                    playerClick++;
+                }
+            }
+            else {
+                // wrong sequence, reset 
+                debugg("Wrong. Playing it again...")
+                failSound.play() ;
+                playingDemo = true;
+                setTimeout(function() {
+                    playNextRound(currentRound, true);
+                }, 3000);
+                playerClick = 0 ;
+            }
+        }   
     });
 
-
+    
 
 });
 function debugg(text) {
-    $('#debugdiv').append('<p>' + text + '</p>') ;
+    $('#debugdiv').append('<br/>' + text) ;
+    var h = $('#debugdiv').height();
+    $('#debugdiv').scrollTop(h);
 }
 /**
  * Returns a random integer between min (inclusive) and max (inclusive)
@@ -73,14 +90,16 @@ function getRandomInt(min, max) {
 }
 
 
-function playNextRound(currentRound) {
+function playNextRound(currentRound, repeat = false) {
+    playerClick = 0 ;
     playingDemo = true ;
     var i = 0 ;
     
-    for (i=0; i < currentRound; i++) {
+    if (repeat === false) {
         currentSequence.push(getRandomInt(1, 4));
-        console.log(i);
-    }
+    } 
+
+
     debugg("Current sequence: " + currentSequence);
 
 
@@ -93,12 +112,12 @@ function playNextRound(currentRound) {
             playingDemo = false;
             // now set the 'listener' for user clicks
         }
-        debugg('iteration: '+ iteration);
+
         var sound = transformTable[currentSequence[iteration]];
         sounds[sound].play();
-        // set bg color of previous divs to white
+        // set bg color of other divs to white
          $('.game-div').css('backgroundColor', 'white');
-        // we need to light up the divs as well
+        // we need to light up a div as well
         var divId = transformTable[currentSequence[iteration]];
         $('#' + divId).css('backgroundColor', $('#' + divId).css("border-left-color"));
         iteration++;
