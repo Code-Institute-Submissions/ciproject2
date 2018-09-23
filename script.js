@@ -4,7 +4,7 @@ var playingDemo = true;
 var currentRound = 1 ;
 var currentSequence = [ ] ;
 var playerClick = 0;
-
+var timeout ;
 // storing setInterval() in here will allow us to stop it.
 var interval ;
 
@@ -39,6 +39,7 @@ $(document).ready(function () {
     $('.game-div').mouseup(function (){
         $(this).css('backgroundColor', 'white');
     });
+    
     $('.game-div').click(function (){
         // clicks will do nothing if the script is currently playing the sequence
         if (playingDemo === false) {
@@ -65,7 +66,7 @@ $(document).ready(function () {
                 debugg("Wrong. Playing it again...")
                 failSound.play() ;
                 playingDemo = true;
-                setTimeout(function() {
+                timeout = setTimeout(function() {
                     playNextRound(currentRound, true);
                 }, 3000);
                 playerClick = 0 ;
@@ -89,8 +90,23 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function resetGame() {
+    $("#start").prop("disabled",false);
+    debugg("Resetting all variables...")
+    currentRound = 1 ;
+    playerClick = 0 ;
+    currentSequence = [];
+    clearInterval(interval);
+    clearTimeout(timeout);
+    
+}
 
-function playNextRound(currentRound, repeat = false) {
+function playNextRound(currentRound, repeat = false, fromHtml = false) {
+    
+    if (fromHtml === true) {
+        // disable the button
+        $("#start").prop("disabled",true);
+    }
     playerClick = 0 ;
     playingDemo = true ;
     var i = 0 ;
