@@ -22,10 +22,7 @@ var oTable = {
 }
 $(document).ready(function () {
     
-    // clicks will do nothing if the script is currently playing the sequence
-    if (playingDemo) {
-        return;
-    }
+
     
     $( "#a" ).mousedown(function() {
         $('#a').css('backgroundColor', 'red');
@@ -43,6 +40,10 @@ $(document).ready(function () {
         $(this).css('backgroundColor', 'white');
     });
     $('.game-div').click(function (){
+        // clicks will do nothing if the script is currently playing the sequence
+        if (playingDemo === true) {
+            return;
+        }
         var id = $(this).attr('id') ;
         sounds[id].play();
         if (currentSequence[playerClick] == oTable[id]) {
@@ -58,9 +59,11 @@ $(document).ready(function () {
     });
 
 
-    playNextRound(currentRound);
-});
 
+});
+function debugg(text) {
+    $('#debugdiv').append('<p>' + text + '</p>') ;
+}
 /**
  * Returns a random integer between min (inclusive) and max (inclusive)
  * Using Math.round() will give you a non-uniform distribution!
@@ -78,12 +81,11 @@ function playNextRound(currentRound) {
         currentSequence.push(getRandomInt(1, 4));
         console.log(i);
     }
-    console.log(currentSequence);
-    console.log(currentSequence[0])
-    
+    debugg("Current sequence: " + currentSequence);
+
 
     var iteration = 0 ;
-    console.log(iteration + 'yes');
+
     interval = setInterval( function () {
         if (iteration == currentSequence.length-1) {
             clearInterval(interval);
@@ -91,7 +93,7 @@ function playNextRound(currentRound) {
             playingDemo = false;
             // now set the 'listener' for user clicks
         }
-        console.log('iteration: '+ iteration);
+        debugg('iteration: '+ iteration);
         var sound = transformTable[currentSequence[iteration]];
         sounds[sound].play();
         // set bg color of previous divs to white
