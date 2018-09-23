@@ -79,8 +79,8 @@ $(document).ready(function () {
 });
 function debugg(text) {
     $('#debugdiv').append('<br/>' + text) ;
-    var h = $('#debugdiv').height();
-    $('#debugdiv').scrollTop(h);
+    var div = $('#debugdiv')
+    div.scrollTop(div.prop("scrollHeight"));
 }
 /**
  * Returns a random integer between min (inclusive) and max (inclusive)
