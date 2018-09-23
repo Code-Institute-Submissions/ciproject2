@@ -107,6 +107,7 @@ function playNextRound(currentRound, repeat = false, fromHtml = false) {
         // disable the button
         $("#start").prop("disabled",true);
     }
+    $('#status').text('Round: '+currentRound);
     playerClick = 0 ;
     playingDemo = true ;
     var i = 0 ;
