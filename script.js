@@ -36,19 +36,24 @@ $(document).ready(function () {
     $( "#d" ).mousedown(function() {
         $('#d').css('backgroundColor', 'lightgreen');
     });
-    $('.game-div').mouseup(function (){
-        $(this).css('backgroundColor', 'white');
-    });
+    // $('.game-div').mouseup(function (){
+    //     $(this).css('backgroundColor', 'white');
+    // });
     
     $('.game-div').click(function (){
         // clicks will do nothing if the script is currently playing the sequence
         if (playingDemo === false) {
+            // , or a previous sound is being played
             if (typeof(activeSound) !== 'undefined' && activeSound.ended !== true) {
                 return false;
             }
         
             var id = $(this).attr('id') ;
             activeSound = sounds[id] ;
+            activeSound.onended = function() {
+                //
+                $('.game-div').css('backgroundColor', 'white');
+            }
             activeSound.play();
             if (currentSequence[playerClick] == oTable[id]) {
                 
