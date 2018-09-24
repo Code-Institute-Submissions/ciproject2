@@ -15,7 +15,7 @@ var sounds = {
     d: new Audio('sounds/d.mp3')
 }
 var failSound = new Audio('sounds/combobreaker.mp3');
-
+var activeSound ;
 var transformTable = {
     1: 'a', 2: 'b', 3: 'c', 4: 'd' 
 }
@@ -43,10 +43,13 @@ $(document).ready(function () {
     $('.game-div').click(function (){
         // clicks will do nothing if the script is currently playing the sequence
         if (playingDemo === false) {
-
+            if (typeof(activeSound) !== 'undefined' && activeSound.ended !== true) {
+                return false;
+            }
         
             var id = $(this).attr('id') ;
-            sounds[id].play();
+            activeSound = sounds[id] ;
+            activeSound.play();
             if (currentSequence[playerClick] == oTable[id]) {
                 
                 debugg('good! ' + playerClick);
