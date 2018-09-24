@@ -13,15 +13,12 @@ var sounds = {
     b: new Audio('sounds/b.mp3'),
     c: new Audio('sounds/c.mp3'),
     d: new Audio('sounds/d.mp3')
-}
+};
 var failSound = new Audio('sounds/combobreaker.mp3');
 var activeSound ;
-var transformTable = {
-    1: 'a', 2: 'b', 3: 'c', 4: 'd' 
-}
-var oTable = {
-    a: 1, b: 2, c: 3, d: 4
-}
+var transformTable = { 1: 'a', 2: 'b', 3: 'c', 4: 'd' } ;
+var oTable = { a: 1, b: 2, c: 3, d: 4 } ;
+
 $(document).ready(function () {
 
     $( "#a" ).mousedown(function() {
@@ -53,14 +50,14 @@ $(document).ready(function () {
             activeSound.onended = function() {
                 //
                 $('.game-div').css('backgroundColor', 'white');
-            }
+            };
             activeSound.play();
             if (currentSequence[playerClick] == oTable[id]) {
                 
                 debugg('good! ' + playerClick);
                 if (playerClick == currentSequence.length - 1) {
                     // go to the next round
-                    debugg("Success! Next round...")
+                    debugg("Success! Next round...");
                     currentRound++ ;
                     playNextRound(currentRound, false);
                     
@@ -71,7 +68,7 @@ $(document).ready(function () {
             }
             else {
                 // wrong sequence, reset 
-                debugg("Wrong. Playing it again...")
+                debugg("Wrong. Playing it again...");
                 failSound.play() ;
                 playingDemo = true;
                 timeout = setTimeout(function() {
@@ -87,7 +84,7 @@ $(document).ready(function () {
 });
 function debugg(text) {
     $('#debugdiv').append('<br/>' + text) ;
-    var div = $('#debugdiv')
+    var div = $('#debugdiv') ;
     div.scrollTop(div.prop("scrollHeight"));
 }
 /**
@@ -100,7 +97,7 @@ function getRandomInt(min, max) {
 
 function resetGame() {
     $("#start").prop("disabled",false);
-    debugg("Resetting all variables...")
+    debugg("Resetting all variables...") ;
     currentRound = 1 ;
     playerClick = 0 ;
     currentSequence = [];
@@ -118,7 +115,7 @@ function playNextRound(currentRound, repeat = false, fromHtml = false) {
     $('#status').text('Round: '+currentRound);
     playerClick = 0 ;
     playingDemo = true ;
-    var i = 0 ;
+
     
     if (repeat === false) {
         currentSequence.push(getRandomInt(1, 4));
@@ -149,7 +146,7 @@ function playNextRound(currentRound, repeat = false, fromHtml = false) {
             $('#' + divId).css('backgroundColor', 'white');
         }, 500);
         iteration++;
-    }, 1000)
+    }, 1000);
 
 
     
