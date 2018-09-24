@@ -1,5 +1,8 @@
 /* global $ */
 
+
+var debugMode = true;
+
 var playingDemo = true;
 var currentRound = 1 ;
 var currentSequence = [ ] ;
@@ -20,7 +23,9 @@ var transformTable = { 1: 'a', 2: 'b', 3: 'c', 4: 'd' } ;
 var oTable = { a: 1, b: 2, c: 3, d: 4 } ;
 
 $(document).ready(function () {
-
+    if (debugMode !== true) {
+        $('.debug').css('display', 'none');
+    }
     $( "#a" ).mousedown(function() {
         $('#a').css('backgroundColor', 'red');
     });
@@ -83,9 +88,11 @@ $(document).ready(function () {
 
 });
 function debugg(text) {
-    $('#debugdiv').append('<br/>' + text) ;
-    var div = $('#debugdiv') ;
-    div.scrollTop(div.prop("scrollHeight"));
+    if (debugMode === true) {
+        $('#debugdiv').append('<br/>' + text) ;
+        var div = $('#debugdiv') ;
+        div.scrollTop(div.prop("scrollHeight"));
+    }
 }
 /**
  * Returns a random integer between min (inclusive) and max (inclusive)
@@ -141,6 +148,7 @@ function playNextRound(currentRound, repeat = false, fromHtml = false) {
         // we need to light up a div as well
         var divId = transformTable[currentSequence[iteration]];
         $('#' + divId).css('backgroundColor', $('#' + divId).css("border-left-color"));
+        
         // ...and make it hollow again
         setTimeout(function() {
             $('#' + divId).css('backgroundColor', 'white');

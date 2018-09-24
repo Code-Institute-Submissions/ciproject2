@@ -11,12 +11,10 @@
     
     
     <body>
+        <button id="start" style="margin: 10px" onclick="playNextRound(currentRound, false, true)">Start game</button>
+        <button style=" margin: 20px" onclick="resetGame()">Reset</button>
+        <textarea disabled id="status" style="font-size: 26px;resize: none;float:right; margin-right: 250px">Round: 1</textarea>
         <div class="debug">
-            <button id="start" style="margin: 10px" onclick="playNextRound(currentRound, false, true)">Start sequence</button>
-            
-            
-            <button style=" margin: 20px" onclick="resetGame()">Reset</button>
-            <textarea disabled id="status" style="font-size: 26px;resize: none;float:right; margin-right: 250px">Round: 1</textarea>
             <div id="debugdiv" style="float: left; overflow-y: scroll; width: 400px; height:400px;">
                 Debug info goes here
             </div>
