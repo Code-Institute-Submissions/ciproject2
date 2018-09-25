@@ -1,7 +1,7 @@
 /* global $ */
 
 
-var debugMode = true;
+var debugMode = false;
 
 var playingDemo = true;
 var currentRound = 1 ;
@@ -104,6 +104,8 @@ function getRandomInt(min, max) {
 
 function resetGame() {
     $("#start").prop("disabled",false);
+    $("#start").css('color', '#14396a')
+
     debugg("Resetting all variables...") ;
     currentRound = 1 ;
     playerClick = 0 ;
@@ -118,6 +120,8 @@ function playNextRound(currentRound, repeat = false, fromHtml = false) {
     if (fromHtml === true) {
         // disable the button
         $("#start").prop("disabled",true);
+        $("#start").css('color', '#f2f5f9');
+
     }
     $('#status').text('Round: '+currentRound);
     playerClick = 0 ;
