@@ -1,7 +1,7 @@
 /* global $ */
 
 
-var debugMode = false;
+var debugMode = true;
 
 var playingDemo = true;
 var currentRound = 1 ;
@@ -22,25 +22,20 @@ var activeSound ;
 var transformTable = { 1: 'a', 2: 'b', 3: 'c', 4: 'd' } ;
 var oTable = { a: 1, b: 2, c: 3, d: 4 } ;
 
+
+
 $(document).ready(function () {
     if (debugMode !== true) {
         $('.debug').css('display', 'none');
     }
-    $( "#a" ).mousedown(function() {
-        $('#a').css('backgroundColor', 'red');
+    $( "#a, #b, #c, #d" ).mousedown(function() {
+        var color = $(this).css("border-left-color");
+        $(this).css('backgroundColor', color);
     });
-    $( "#b" ).mousedown(function() {
-        $('#b').css('backgroundColor', 'blue');
+
+    $('.game-div').mouseup(function (){
+         $(this).css('backgroundColor', 'white');
     });
-    $( "#c" ).mousedown(function() {
-        $('#c').css('backgroundColor', 'orange');
-    });
-    $( "#d" ).mousedown(function() {
-        $('#d').css('backgroundColor', 'lightgreen');
-    });
-    // $('.game-div').mouseup(function (){
-    //     $(this).css('backgroundColor', 'white');
-    // });
     
     $('.game-div').click(function (){
         // clicks will do nothing if the script is currently playing the sequence
@@ -49,7 +44,8 @@ $(document).ready(function () {
             if (typeof(activeSound) !== 'undefined' && activeSound.ended !== true) {
                 return false;
             }
-        
+            // , or there's pause after a failed attempt
+            // TODO
             var id = $(this).attr('id') ;
             activeSound = sounds[id] ;
             activeSound.onended = function() {
@@ -89,8 +85,8 @@ $(document).ready(function () {
 });
 function debugg(text) {
     if (debugMode === true) {
-        $('#debugdiv').append('<br/>' + text) ;
         var div = $('#debugdiv') ;
+        div.append('<br/>' + text) ;
         div.scrollTop(div.prop("scrollHeight"));
     }
 }
