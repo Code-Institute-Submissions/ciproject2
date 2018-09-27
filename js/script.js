@@ -140,7 +140,7 @@ function playNextRound(currentRound, repeat = false, fromHtml = false) {
             // the sound sequence is over
             playingDemo = false;
             // now set the 'listener' for user clicks
-            return ;
+
         }
 
         var sound = transformTable[currentSequence[iteration]];
