@@ -115,6 +115,7 @@ function resetGame() {
     currentSequence = [];
     clearInterval(interval);
     clearTimeout(timeout);
+    playingDemo = true;
     
 }
 
