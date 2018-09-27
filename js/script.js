@@ -29,8 +29,10 @@ $(document).ready(function () {
         $('.debug').css('display', 'none');
     }
     $( "#a, #b, #c, #d" ).mousedown(function() {
-        var color = $(this).css("border-left-color");
-        $(this).css('backgroundColor', color);
+        if (playingDemo === false) {
+            var color = $(this).css("border-left-color");
+            $(this).css('backgroundColor', color);
+        }
     });
 
     $('.game-div').mouseup(function (){
@@ -55,12 +57,16 @@ $(document).ready(function () {
             activeSound.play();
             if (currentSequence[playerClick] == oTable[id]) {
                 
-                debugg('good! ' + playerClick);
+
                 if (playerClick == currentSequence.length - 1) {
                     // go to the next round
-                    debugg("Success! Next round...");
+
+                    $('#status').text("Good! Next round...");
                     currentRound++ ;
-                    playNextRound(currentRound, false);
+                    setTimeout(function () {
+                        playNextRound(currentRound, false);
+                    }, 2000);
+                    
                     
                 }
                 else {
@@ -69,12 +75,13 @@ $(document).ready(function () {
             }
             else {
                 // wrong sequence, reset 
-                debugg("Wrong. Playing it again...");
+
+                $('#status').text("Wrong! Playing it again");
                 failSound.play() ;
                 playingDemo = true;
                 timeout = setTimeout(function() {
                     playNextRound(currentRound, true);
-                }, 3000);
+                }, 2000);
                 playerClick = 0 ;
             }
         }   
@@ -119,7 +126,7 @@ function playNextRound(currentRound, repeat = false, fromHtml = false) {
         $("#start").css('color', '#f2f5f9');
 
     }
-    $('#status').text('Round: '+currentRound);
+    $('#status').text("Playing the sequence");
     playerClick = 0 ;
     playingDemo = true ;
 
@@ -140,7 +147,10 @@ function playNextRound(currentRound, repeat = false, fromHtml = false) {
             // the sound sequence is over
             playingDemo = false;
             // now set the 'listener' for user clicks
-
+            setTimeout(function () {
+               $('#status').text("Round: " +currentRound); 
+            }, 500);
+            
         }
 
         var sound = transformTable[currentSequence[iteration]];
