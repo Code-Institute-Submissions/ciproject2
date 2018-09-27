@@ -1,7 +1,7 @@
 /* global $ */
 
 
-var debugMode = true;
+var debugMode = false;
 
 var playingDemo = true;
 var currentRound = 1 ;
@@ -62,6 +62,7 @@ $(document).ready(function () {
                     // go to the next round
 
                     $('#status').text("Good! Next round...");
+                    effectComplete();
                     currentRound++ ;
                     setTimeout(function () {
                         playNextRound(currentRound, false);
@@ -70,6 +71,7 @@ $(document).ready(function () {
                     
                 }
                 else {
+                    // correct, listen for another
                     playerClick++;
                 }
             }
@@ -109,16 +111,27 @@ function resetGame() {
     $("#start").prop("disabled",false);
     $("#start").css('color', '#14396a')
 
-    debugg("Resetting all variables...") ;
+    $('#status').text("Round: 1");
     currentRound = 1 ;
     playerClick = 0 ;
     currentSequence = [];
     clearInterval(interval);
     clearTimeout(timeout);
     playingDemo = true;
+    effectComplete();
     
 }
+function effectComplete() {
 
+    var i = 0 ;
+    var int = setInterval(function() {
+        if (i > 5) {
+            clearInterval(int);
+        }
+        $( "#a, #b, #c, #d" ).css('backgroundColor', i % 2 ? '#c4daff' : 'white') ;
+        i++;
+    }, 100);
+}
 function playNextRound(currentRound, repeat = false, fromHtml = false) {
     
     if (fromHtml === true) {
@@ -147,26 +160,27 @@ function playNextRound(currentRound, repeat = false, fromHtml = false) {
             clearInterval(interval);
             // the sound sequence is over
             playingDemo = false;
-            // now set the 'listener' for user clicks
+
             setTimeout(function () {
                $('#status').text("Round: " +currentRound); 
             }, 500);
             
         }
 
-        var sound = transformTable[currentSequence[iteration]];
+        var sound = transformTable[currentSequence[iteration]]; // sound is also div id
         sounds[sound].play();
 
-        // we need to light up a div as well
-        var divId = transformTable[currentSequence[iteration]];
-        $('#' + divId).css('backgroundColor', $('#' + divId).css("border-left-color"));
+        //light up the div
+        $('#' + sound).css('backgroundColor', $('#' + sound).css("border-left-color"));
         
-        // ...and make it hollow again
+        // ...and make it hollow again after a while
         setTimeout(function() {
-            $('#' + divId).css('backgroundColor', 'white');
+            $('#' + sound).css('backgroundColor', 'white');
         }, 500);
+        
         iteration++;
-    }, 1000);
+        
+    }, 700);
 
 
     
