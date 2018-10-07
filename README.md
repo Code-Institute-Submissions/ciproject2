@@ -47,6 +47,7 @@ This website is for anyone who likes to exercise their memory, as well as people
 5. Hitting 'reset' button before the new sequence starts playing (during a short delay between rounds) results in the game not being reset, but start button becoming enabled
     - I am clearing both interval and timeout when the user hits 'reset' button,
       possible workaround would be disabling the 'reset' button whenever an interval or timeout is set, and enabling it when the timed function finishes
+      [FIXED NOW]
 
 ## Deployment
 
