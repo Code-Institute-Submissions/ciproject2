@@ -64,6 +64,7 @@ $(document).ready(function () {
                     $('#status').text("Good! Next round...");
                     effectComplete();
                     currentRound++ ;
+                    playingDemo = true;
                     setTimeout(function () {
                         playNextRound(currentRound, false);
                     }, 2000);
@@ -108,6 +109,9 @@ function getRandomInt(min, max) {
 }
 
 function resetGame() {
+    if (playingDemo === true) {
+        return;
+    }
     $("#start")
     .prop("disabled",false)
     .css('color', '#14396a');
