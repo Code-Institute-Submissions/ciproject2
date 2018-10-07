@@ -108,8 +108,9 @@ function getRandomInt(min, max) {
 }
 
 function resetGame() {
-    $("#start").prop("disabled",false);
-    $("#start").css('color', '#14396a')
+    $("#start")
+    .prop("disabled",false)
+    .css('color', '#14396a');
 
     $('#status').text("Round: 1");
     currentRound = 1 ;

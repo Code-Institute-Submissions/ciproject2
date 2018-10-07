@@ -17,6 +17,13 @@
 	text-decoration:none;
 	text-shadow:0px 1px 0px #7cacde;
 }
+#status {
+    border: 1px solid #bee2f9 ;
+    background-color: white;
+    text-align:center;
+    font-size: 22px;
+    resize: none;
+}
 .myButton:hover {
 	background-color:transparent;
 }
@@ -26,15 +33,15 @@
 }
 .game-div {
 
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
 
     display:inline-block;
     border-radius: 100px;
     margin: 5px;
 }
 .content-div {
-    width: 450px;
+    width: 370px;
     height: 500px;
     margin: auto;
 
