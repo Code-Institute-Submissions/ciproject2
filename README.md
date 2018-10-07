@@ -62,7 +62,7 @@ I've started this project using Cloud9, then linked it to a repository on GitHub
 
 
 ### Media
-- Sounds were obtained from another open-source Simon game and shortened
+- Sounds were obtained from another open-source Simon game and shortened (https://github.com/ewathedoer/simon-game)
 
 ### Acknowledgements
 
